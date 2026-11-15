@@ -1,0 +1,13 @@
+flowchart LR
+    user["用户提问"] -->|发送问题| agent["Agent 推理与协调"]
+    agent -->|检索知识| rag["RAG 知识工具"]
+    rag -->|查询向量| db[("知识索引")]
+    agent -->|调用业务工具| mcp["MCP 工具服务"]
+    agent -->|生成回答| answer["中文解释与结果"]
+
+    classDef core fill:#edf4fe,stroke:#4c8ddb,color:#2c2c2a;
+    classDef control fill:#f0ecfa,stroke:#9a82cf,color:#2c2c2a;
+    classDef data fill:#e9f5f2,stroke:#58aaa8,color:#2c2c2a;
+    class user,answer core;
+    class agent,mcp control;
+    class rag,db data;

@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant U as 用户
+    participant A as Codex Agent
+    participant S as cjx-sketchmind
+    participant T as 执行工具
+    U->>A: 提交任务
+    A->>S: ① 读取技能
+    S-->>A: 指令入上下文
+    A->>A: ② 规划图结构
+    A->>T: 保存源文件
+    T-->>A: 保存成功
+    A->>T: ③ 生成图片
+    T-->>A: 返回执行结果
+    A->>T: 打开预览
+    T-->>A: 返回 PNG
+    A->>A: ④ 检查结果
+    A-->>U: ⑤ 交付结果

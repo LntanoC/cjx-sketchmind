@@ -1,0 +1,21 @@
+# Dependencies, local caches and generated outputs stay outside source control.
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+.cache/
+output/
+outputs/
+artifacts/
+dist/
+target/
+*.log
+
+# Local environment and credential files are never part of the skill package.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+Thumbs.db
+Desktop.ini

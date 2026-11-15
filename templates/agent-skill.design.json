@@ -1,0 +1,29 @@
+{
+  "sequence": true,
+  "connectCards": false,
+  "decisionLayout": "compact",
+  "title": "一张图，如何经过 Agent 与 Skill 的协作生成？",
+  "subtitle": "沿时间向下读 · Agent 规划与判断 · Skill 提供静态指引和脚本 · 工具执行并返回结果",
+  "roles": [
+    { "match": "Codex Agent", "role": "agent" },
+    { "match": "cjx-sketchmind", "role": "skill" },
+    { "match": "执行工具", "role": "tool" },
+    { "match": "用户", "role": "neutral" }
+  ],
+  "phases": [
+    { "title": "加载与规划", "from": "提交任务", "to": "规划图结构" },
+    { "title": "生成与执行", "from": "保存源文件", "to": "返回执行结果" },
+    { "title": "检查与交付", "from": "打开预览", "to": "交付结果" }
+  ],
+  "emphasis": [
+    { "match": "指令入上下文", "role": "skill" },
+    { "match": "返回执行结果", "role": "data" }
+  ],
+  "cards": [
+    { "anchor": "读取技能", "kind": "file", "role": "skill", "title": "① 读取什么？", "body": "SKILL.md + 所需 references\n教学步骤、视觉规则、执行方法" },
+    { "anchor": "指令入上下文", "role": "skill", "emphasis": true, "title": "① 指引进入上下文", "body": "Skill 文件内容被 Agent 读取\n由 Agent 决定图型与工具调用" },
+    { "anchor": "生成图片", "role": "tool", "title": "③ 调用什么？", "body": "exec_command 调用本地脚本\n输入：.mmd 图结构\n输出：原生画布 + PNG" },
+    { "anchor": "返回执行结果", "kind": "file", "role": "data", "emphasis": true, "title": "③ 工具返回观察结果", "body": "outputs：本次文件路径\ntimingsMs：耗时；失败则报错" },
+    { "anchor": "检查结果", "kind": "decision", "role": "agent", "title": "④ 检查通过？", "body": "", "retryTo": "生成图片", "successTo": "交付结果", "successLabel": "⑤ 交付结果", "retryLabel": "修改源文件\n再生成并检查" }
+  ]
+}

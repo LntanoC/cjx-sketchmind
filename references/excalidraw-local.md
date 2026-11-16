@@ -16,6 +16,8 @@ node "<技能绝对路径>/scripts/excalidraw.mjs" doctor --smoke
 
 ## 新图
 
+以下是 Mermaid 构建路径。多角色业务泳道需保证连续平行的泳道和共同流程方向；自动布局不能满足时，按 [产品图指南](product-diagrams.md) 从原生模板制作新副本并渲染，不强制生成 Mermaid。
+
 1. 把 Mermaid 源文件保存到本次交付目录，如 `01-overview.mmd`。可参考 `templates/architecture.mmd` 的语义颜色；业务结构必须按当前任务重写。
 2. 用绝对路径调用脚本，不能假设当前工作目录就是技能目录：
 

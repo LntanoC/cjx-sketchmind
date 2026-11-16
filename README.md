@@ -1,10 +1,12 @@
 # cjx-sketchmind v1.5
 
-彩色手绘技术图解 Skill，可在 Codex 等支持本地技能和命令执行的编码助手中使用。默认通过免费的官方 Excalidraw CLI 生成原生画布和 PNG，SVG 按需导出，不需要 MCP、Plus 或 API Key。
+彩色手绘技术与产品图解 Skill，可在 Codex 等支持本地技能和命令执行的编码助手中使用。默认通过免费的官方 Excalidraw CLI 生成原生画布和 PNG，SVG 按需导出，不需要 MCP、Plus 或 API Key。
 
 优先按场景中的主体、动作和状态变化组织画面；必要时使用带技术标签的简笔主体或连续快照，也可组合专业图示。详见 [场景构图指南](references/scenario-composition.md)。
 
 系统架构图默认先展示真实组件、层级、边界及连接，采用彩色手绘白板风格；示例系统和实际项目必须区分。详见 [架构构图指南](references/architecture-composition.md)。
+
+支持业务流程图、系统流程图、功能清单图、低保真原型和静态甘特图。多角色业务流程默认使用连续平行泳道。产品图的选型、模板和检查见 [产品图指南](references/product-diagrams.md)。原型默认可编辑，甘特图的时间比例需在画布中核对。
 
 ## 工作流程
 

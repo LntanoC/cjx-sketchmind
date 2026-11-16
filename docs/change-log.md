@@ -167,3 +167,28 @@ Codex 侧栏注册项目仍有独立自定义显示名 `draw-skill`；当前项�
 - `README.md`：增加工作流程 GIF、静态图及可编辑源文件链接。
 - `scripts/readme-workflow.py`：通过本地 Excalidraw 流程生成各阶段帧，并使用 Pillow 合成 GIF；Pillow 仅为维护动画时的可选依赖。
 - `docs/images/`：保存动画、静态预览、Excalidraw 画布与 Mermaid 源文件。
+
+## 2026-11-16 · 增加产品图模式
+
+- `SKILL.md` 与 `README.md`：加入产品规划图场景、输出和路由。
+- `references/product-diagrams.md` 与 `templates/product-*.mmd`：增加业务流程、系统流程、功能清单、低保真原型和静态甘特图的指导与结构示例。
+- 验证：五个模板均成功生成 Excalidraw 原生图元和 PNG，均无图片图元；既有 5 项 Node 测试和 skill 格式验证通过。原型与甘特示例仅为结构起点，尚需在原生画布调整为线框和按比例的时间轴；本轮未验证成品排版。
+
+## 2026-11-16 · 产品流程步骤与配色
+
+- `SKILL.md`、`references/product-diagrams.md`：明确业务流程要写清关键动作、角色交接、分支与结果，默认使用有语义的柔和多色并检查预览；未知规则标注假设或待确认。
+- `templates/product-business-flow.mmd`：增加编号、退回闭环、拒绝结果及角色与状态配色的虚构示例。
+
+验证：示例生成原生画布和 PNG 并检查配色、步骤和分支；skill 格式校验与 Git 空白检查通过。上述三个技能文件已同步到本机安装目录。
+
+## 2026-11-16 · 多角色业务流程默认泳道图
+
+- `SKILL.md`、`references/product-diagrams.md`：多角色业务流程默认采用角色泳道；单角色或复杂规则按内容选用普通流程图，必要时拆出规则详图，用户指定画法优先。
+
+## 2026-11-16 · 规范业务泳道布局
+
+- `SKILL.md`、`references/product-diagrams.md`、`references/excalidraw-local.md`：明确泳道须平行、连续、对齐并共享流程方向；Mermaid 自动布局不满足时采用原生场景，检查交接与回线。
+- `templates/product-swimlane.excalidraw`：新增可编辑的虚构报销泳道示例；箭头未绑定，移动节点时须同步调整。
+- `README.md`：说明多角色流程的默认泳道布局。
+
+验证：模板由本地 CLI 成功渲染为 PNG（41 个原生图元、0 个图片图元）；此前已打开同一场景预览检查。skill 格式及 Git 空白检查通过；相关技能文件已同步到本机安装目录。

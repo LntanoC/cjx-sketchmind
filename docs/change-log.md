@@ -161,3 +161,9 @@ Codex 侧栏注册项目仍有独立自定义显示名 `draw-skill`；当前项�
 ## 2026-11-16 · 改进技术讲解触发条件
 
 - `SKILL.md`：明确技术安装、配置或机制讲解在图示有助理解时可主动使用技能，即使用户未明确说画图；保留纯文字和简单问题的例外。
+
+## 2026-11-16 · README 工作流程动画
+
+- `README.md`：增加工作流程 GIF、静态图及可编辑源文件链接。
+- `scripts/readme-workflow.py`：通过本地 Excalidraw 流程生成各阶段帧，并使用 Pillow 合成 GIF；Pillow 仅为维护动画时的可选依赖。
+- `docs/images/`：保存动画、静态预览、Excalidraw 画布与 Mermaid 源文件。

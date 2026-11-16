@@ -6,6 +6,14 @@
 
 系统架构图默认先展示真实组件、层级、边界及连接，采用彩色手绘白板风格；示例系统和实际项目必须区分。详见 [架构构图指南](references/architecture-composition.md)。
 
+## 工作流程
+
+![工作流程动画：理解需求、设计图示、生成画布、检查交付](docs/images/workflow.gif)
+
+先理解问题并整理知识，再选择合适的场景或图示；通过本地工具生成可编辑画布和预览，最后检查内容及排版。动画展示默认路径，具体步骤会根据任务调整。
+
+静态版本：[查看完整流程图](docs/images/workflow.png)；[可编辑画布](docs/images/workflow.excalidraw)；[Mermaid 源文件](docs/images/workflow.mmd)。需要重新生成时，安装 Pillow 后运行 `python scripts/readme-workflow.py`。
+
 ## 本机使用
 
 该目录已经安装在 `%USERPROFILE%\.codex\skills\cjx-sketchmind`。正常提问即可，例如：

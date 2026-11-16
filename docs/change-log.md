@@ -140,3 +140,24 @@ Codex 侧栏注册项目仍有独立自定义显示名 `draw-skill`；当前项�
 验证：Node 语法检查通过；默认仅 PNG、SVG 单格式导出、中文/空格路径、原生文件 SHA-256 保留、两种格式完整自检、覆盖保护、非法参数与非法 Mermaid 无输出发布均通过。已打开默认 PNG，中文与布局可读。三轮交替测试，旧版中位数 8.259 秒，新版 5.020 秒，缩短约 39.2%；结果限于本机同一小图模板，不代表完整对话耗时。官方 `quick_validate.py` 因当前 Python 缺少 PyYAML、临时依赖下载代理连接失败而未能运行；独立检查已确认技能名称、描述、frontmatter 与未完成占位内容有效。
 
 部署：将以上 7 个更新文件同步到 Codex 安装目录；一并补齐此前仅在桌面的 `docs/usage-and-performance.md`，最终两处完整技能文件逐项 SHA-256 一致。测试、计时产物和验证依赖目录保留在本轮对话图示目录，不放入技能包。未修改全局 CLI、MCP 配置或其他客户端；未提交或推送。
+## 2026-11-15 · 场景优先构图
+
+- `SKILL.md`：优先从主体、动作及状态变化设计画面，按需组合专业图形与主体简笔概描。
+- `references/scenario-composition.md`：新增场景构图、线程池示例、可编辑实现与比喻边界。
+- `references/visual-style.md`、`references/diagram-patterns.md`、`references/quality-checklist.md`：补充概描规则、模式定位与质量检查。
+- `templates/scenario-thread-pool.mmd`：新增线程池场景构图示例；`README.md` 更新能力说明。
+- 验证：示例通过本地构建并生成原生图元和 PNG，已检查预览；主体概描采用已有原生编辑能力，未新增自动插画生成器。
+
+## 2026-11-15 · 系统架构图与彩色手绘风格
+
+- `SKILL.md`、`references/architecture-composition.md`：系统架构图优先表达真实组件、分层、边界及关系；补充证据、布局和自动排版限制。
+- `templates/architecture.mmd`：改为虚构的客户端、网关、并列服务和数据分层示例；`references/diagram-patterns.md`、`references/visual-style.md`、`references/quality-checklist.md` 与 `README.md` 更新相应规则。
+- 验证：本地构建生成原生画布及 PNG，打开预览确认同层并列与彩色手绘效果；发现转换器可能让箭头穿过层标题，已在指南中要求调整并重新渲染。技能格式及差异检查另行执行。
+
+## 2026-11-16 · 通用化技能描述
+
+- `SKILL.md`：移除具体技术栈枚举，使用技术概念、系统架构、工作原理等通用场景描述技能的适用范围与输出。
+
+## 2026-11-16 · 改进技术讲解触发条件
+
+- `SKILL.md`：明确技术安装、配置或机制讲解在图示有助理解时可主动使用技能，即使用户未明确说画图；保留纯文字和简单问题的例外。

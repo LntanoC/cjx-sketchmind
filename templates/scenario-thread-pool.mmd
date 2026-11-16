@@ -1,0 +1,17 @@
+flowchart LR
+  subgraph s1[① 示例：核心数 2，工作中]
+    w1[工作线程 1] --- t1[任务 A]
+    w2[工作线程 2] --- t2[任务 B]
+  end
+  subgraph s2[② 队列容量 2，已满]
+    q1[任务 C] --- q2[任务 D]
+  end
+  subgraph s3[③ 最大线程数 3，入队失败]
+    w3[可扩容时新增线程] --- t3[任务 E]
+  end
+  s1 -->|后续任务| s2
+  s2 -->|新任务入队失败| s3
+  classDef worker fill:#dcecff,stroke:#4c8ddb,color:#222;
+  classDef task fill:#fff0d6,stroke:#e9a34a,color:#222;
+  class w1,w2,w3 worker;
+  class t1,t2,t3,q1,q2 task;

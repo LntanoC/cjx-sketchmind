@@ -1,13 +1,37 @@
-flowchart LR
-    user["用户提问"] -->|发送问题| agent["Agent 推理与协调"]
-    agent -->|检索知识| rag["RAG 知识工具"]
-    rag -->|查询向量| db[("知识索引")]
-    agent -->|调用业务工具| mcp["MCP 工具服务"]
-    agent -->|生成回答| answer["中文解释与结果"]
-
-    classDef core fill:#edf4fe,stroke:#4c8ddb,color:#2c2c2a;
-    classDef control fill:#f0ecfa,stroke:#9a82cf,color:#2c2c2a;
-    classDef data fill:#e9f5f2,stroke:#58aaa8,color:#2c2c2a;
-    class user,answer core;
-    class agent,mcp control;
-    class rag,db data;
+flowchart TB
+    subgraph client[客户端层]
+      direction LR
+      web[Web 客户端]
+      mobile[移动客户端]
+    end
+    subgraph edge[接入层]
+      gateway[API 网关]
+    end
+    subgraph application[应用服务层]
+      direction LR
+      catalog[商品服务]
+      order[订单服务]
+      users[用户服务]
+    end
+    subgraph data[数据层]
+      direction LR
+      productdb[(商品数据库)]
+      orderdb[(订单数据库)]
+      userdb[(用户数据库)]
+    end
+    web -->|HTTPS| gateway
+    mobile -->|HTTPS| gateway
+    gateway -->|路由| catalog
+    gateway -->|路由| order
+    gateway -->|路由| users
+    catalog -->|读写| productdb
+    order -->|读写| orderdb
+    users -->|读写| userdb
+    classDef clientStyle fill:#e1efff,stroke:#4c8ddb,color:#243447;
+    classDef gatewayStyle fill:#f0e8fa,stroke:#9578c9,color:#243447;
+    classDef serviceStyle fill:#e1f4e6,stroke:#65ad7b,color:#243447;
+    classDef dataStyle fill:#fff0d8,stroke:#d99b47,color:#243447;
+    class web,mobile clientStyle;
+    class gateway gatewayStyle;
+    class catalog,order,users serviceStyle;
+    class productdb,orderdb,userdb dataStyle;

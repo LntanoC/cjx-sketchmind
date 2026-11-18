@@ -4,7 +4,7 @@ import { existsSync, readFileSync, realpathSync, mkdtempSync, mkdirSync, writeFi
 import { dirname, join, resolve, delimiter } from 'node:path';
 import { tmpdir, homedir } from 'node:os';
 import { fileURLToPath } from 'node:url';
-import { styleScene } from './scene-style.mjs';
+import { HANDWRITING_FONT, styleScene } from './scene-style.mjs';
 
 const skillRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const help = `cjx-sketchmind local Excalidraw (Node >=22, official CLI >=0.3.0)
@@ -47,6 +47,11 @@ function runCli(entry, args, timeout, timings, label = args[0]) {
   });
   if (timings) timings[label] = Math.round(performance.now() - started);
   if (child.error || child.status !== 0) throw new Error(`Excalidraw ${args[0]} failed: ${child.error?.message || child.stderr || child.stdout || `exit ${child.status}`}`.slice(0, 8000));
+  const fontsOption = args.indexOf('--fonts-url');
+  const fallbackAllowed = fontsOption >= 0 && args[fontsOption + 1] === 'none';
+  if (!fallbackAllowed && /use a fallback font/i.test(child.stderr || '')) {
+    throw new Error(`Excalidraw ${args[0]} could not load the handwriting font: ${child.stderr.trim()}`);
+  }
   if (child.stderr?.trim()) process.stderr.write(child.stderr);
   return child.stdout.trim();
 }
@@ -80,7 +85,9 @@ function sceneStats(file) {
 }
 
 function renderOptions(options) {
-  const args = ['--fonts-url', options['fonts-url'] || process.env.EXCALIDRAW_FONTS_URL || 'none', '--timeout', String(options.timeout)];
+  const args = ['--timeout', String(options.timeout)];
+  const fonts = options['fonts-url'] || process.env.EXCALIDRAW_FONTS_URL;
+  if (fonts) args.push('--fonts-url', fonts);
   const browser = options['browser-path'] || process.env.EXCALIDRAW_BROWSER_PATH;
   if (browser) args.push('--browser-path', browser);
   return args;
@@ -105,7 +112,7 @@ function build(mode, input, output, options, cli) {
     if (mode === 'build') {
       runCli(cli.entry, ['mermaid', source, '--out', sceneFile, '--elbow', '--font-size', '22', ...common], options.timeout, timingsMs, 'mermaid');
       const { scene } = sceneStats(sceneFile);
-      scene.appState = { ...scene.appState, viewBackgroundColor: '#FFFEFA', exportBackground: true, exportWithDarkMode: false };
+      scene.appState = { ...scene.appState, currentItemFontFamily: HANDWRITING_FONT, viewBackgroundColor: '#FFFEFA', exportBackground: true, exportWithDarkMode: false };
       writeFileSync(sceneFile, JSON.stringify(scene, null, 2) + '\n', 'utf8');
     } else {
       sceneStats(source);
@@ -183,8 +190,13 @@ try {
           // Full diagnostics continue to exercise both exporters, independent of the fast default.
           const smoke = build('build', join(skillRoot, 'templates', 'architecture.mmd'), join(smokeDir, '中文 path', 'overview'), { ...options, preview: 'both' }, cli);
           const scene = JSON.parse(readFileSync(smoke.scene, 'utf8'));
-          if (!scene.elements.some(e => e.type === 'text' && e.text?.includes('用户提问'))) throw new Error('Chinese label was lost.');
-          result.rendering = { verified: true, elements: smoke.elements, shapes: smoke.shapes, texts: smoke.texts, images: smoke.images, width: smoke.width, height: smoke.height, chineseLabels: true };
+          const texts = scene.elements.filter(e => e.type === 'text' && !e.isDeleted);
+          if (!texts.some(e => /\p{Script=Han}/u.test(e.text))) throw new Error('Chinese labels were lost.');
+          if (!texts.every(e => e.fontFamily === HANDWRITING_FONT)) throw new Error('Expected hand-drawn text for all labels.');
+          const svg = readFileSync(smoke.outputs.find(path => path.endsWith('.svg')), 'utf8');
+          const chineseHandwriting = /@font-face\s*\{[^}]*font-family:\s*Xiaolai\s*;[^}]*data:/.test(svg);
+          if (!chineseHandwriting && !renderOptions(options).includes('none')) throw new Error('Xiaolai was not embedded in the SVG.');
+          result.rendering = { verified: true, elements: smoke.elements, shapes: smoke.shapes, texts: smoke.texts, images: smoke.images, width: smoke.width, height: smoke.height, chineseLabels: true, chineseHandwriting };
           result.timingsMs = smoke.timingsMs;
         } finally { rmSync(smokeDir, { recursive: true, force: true }); }
       }

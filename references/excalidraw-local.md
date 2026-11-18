@@ -12,7 +12,7 @@
 node "<技能绝对路径>/scripts/excalidraw.mjs" doctor --smoke
 ```
 
-成功结果应包含 `rendering.verified: true`、`chineseLabels: true` 与原生图元数量；只有 `doctor` 而未加 `--smoke` 时仅验证 Node 与 CLI，不代表浏览器已渲染成功。
+成功结果应包含 `rendering.verified: true`、`chineseLabels: true`、`chineseHandwriting: true` 与原生图元数量。`doctor` 只验证 Node 与 CLI。`doctor --smoke` 还会检查中文 SVG 字体嵌入。
 
 ## 新图
 
@@ -46,7 +46,7 @@ node "<技能绝对路径>/scripts/excalidraw.mjs" render "<文件>/现有图.ex
 
 ## 原生样式与设计配置
 
-新 `build` 默认应用 `scene-style.mjs` 的教学样式：语义配色、圆角组件、返回线及生命线样式，并等比展开保留原有几何关系。已有流程图的显式 Mermaid 填色优先保留；角色规则可在设计配置中明确指定。普通 `render` 不应用这些变换。
+新 `build` 默认应用 `scene-style.mjs` 的教学样式，包括手写文字、语义配色、圆角组件、返回线和生命线，并等比展开保留原有几何关系。已有流程图的显式 Mermaid 填色优先保留；角色规则可在设计配置中明确指定。普通 `render` 按传入场景的字体和布局导出。
 
 ```powershell
 node "<技能目录>/scripts/excalidraw.mjs" build "<图>.mmd" --design "<图>.design.json" --out "<交付目录>/图"
@@ -74,7 +74,7 @@ node "<技能目录>/scripts/excalidraw.mjs" decorate "<原图>.excalidraw" --de
 
 - 脚本直接以 Node 启动 CLI，不经 shell，支持中文与空格路径；可用 `EXCALIDRAW_CLI_PATH` 指定官方 CLI 的 `dist/main.js`。
 - 浏览器由 CLI 自动发现；找不到时传 `--browser-path "<浏览器可执行文件>"`，或使用 `EXCALIDRAW_BROWSER_PATH`。不修改用户浏览器配置。
-- 默认 `--fonts-url none`，使用系统中文字体，避免首次绘图依赖字体下载。需要小赖手写字时显式传入 `--fonts-url "<镜像地址或本地字体目录>"`，或使用 `EXCALIDRAW_FONTS_URL`；下载缓存由官方 CLI 管理。
+- 官方 CLI 按需加载并缓存小赖手写字。离线可用 `--fonts-url "<本地字体目录>"` 或 `EXCALIDRAW_FONTS_URL` 指向与官方字体文件结构一致的目录，也可指定镜像。默认导出遇到字体回退会报错，修正字体来源后再导出。`--fonts-url none` 仅在用户明确接受系统字体时使用。
 - 文件默认不覆盖。修订自己的输出时用 `--force`。转换与渲染先在系统临时目录完成，验证成功后才复制到交付目录，结束自动清理临时文件。
 - 失败时按报错修正语法或环境，再重试一次；仍失败就如实报告具体错误和已产出的格式。不要默默只生成 SVG，也不要把不存在的 `.excalidraw` 列为交付物。
 - 输出放在用户指定目录或当前对话的图示目录；未要求修改项目时，不往项目源码目录写文件。

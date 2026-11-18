@@ -44,6 +44,8 @@ test('phase and payload decoration remains native, finite and unique', () => {
   assert.equal(new Set(styled.elements.map(e => e.id)).size, styled.elements.length);
   assert(styled.elements.every(e => [e.x, e.y, e.width, e.height].every(Number.isFinite) && e.width >= 0 && e.height >= 0));
   assert(!styled.elements.some(e => e.type === 'image'));
+  assert(styled.elements.filter(e => e.type === 'text').every(e => e.fontFamily === 5));
+  assert.equal(styled.appState.currentItemFontFamily, 5);
   assert.equal(styled.elements.filter(e => e.type === 'arrow').length, 1, 'Default explanation cards must not add apparent workflow steps.');
   // Negative return points must not expand the canvas into a large empty right margin.
   const title = styled.elements.find(e => e.text === '流程');

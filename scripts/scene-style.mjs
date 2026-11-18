@@ -1,5 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
+export const HANDWRITING_FONT = 5; // Excalifont, with Xiaolai for CJK.
+
 export const palette = {
   neutral: { fill: '#F8F7F4', stroke: '#B4B2A9' },
   agent: { fill: '#F0ECFA', stroke: '#9A82CF' },
@@ -76,7 +78,7 @@ export function styleScene(original, design = {}, { sequence = false } = {}) {
   };
   const addText = (text, x, y, width, size = 18, color = ink) => {
     const content = wrap(text, width, size);
-    const e = cloneElement(baseText, { type: 'text', text: content, originalText: content, x, y, width, height: content.split('\n').length * size * 1.3, fontSize: size, fontFamily: 2, lineHeight: 1.3, textAlign: 'left', verticalAlign: 'top', autoResize: false, strokeColor: color, backgroundColor: 'transparent', opacity: 100 });
+    const e = cloneElement(baseText, { type: 'text', text: content, originalText: content, x, y, width, height: content.split('\n').length * size * 1.3, fontSize: size, fontFamily: HANDWRITING_FONT, lineHeight: 1.3, textAlign: 'left', verticalAlign: 'top', autoResize: false, strokeColor: color, backgroundColor: 'transparent', opacity: 100 });
     additions.push(e); return e;
   };
   const addArrow = (points, role, label, dashed = false) => {
@@ -94,7 +96,10 @@ export function styleScene(original, design = {}, { sequence = false } = {}) {
   for (const e of live) {
     for (const key of ['x', 'y', 'width', 'height']) e[key] *= scale;
     if (e.points) e.points = e.points.map(([x, y]) => [x * scale, y * scale]);
-    if (e.type === 'text') e.fontSize *= scale;
+    if (e.type === 'text') {
+      e.fontSize *= scale;
+      e.fontFamily = HANDWRITING_FONT;
+    }
   }
   const textOf = e => e.boundElements?.filter(b => b.type === 'text').map(b => byId.get(b.id)?.text || '').join(' ') || '';
   const texts = live.filter(e => e.type === 'text');
@@ -232,7 +237,7 @@ export function styleScene(original, design = {}, { sequence = false } = {}) {
     addText(`实线：读取 / 调用 / 通过    虚线：返回 / 局部修正    说明卡片按编号对应${design.connectCards ? '（含关联线）' : ''}`, all.left, y + 43, 1500, 17, '#66645E');
   }
   scene.elements = [...backgrounds, ...scene.elements, ...additions];
-  scene.appState = { ...scene.appState, viewBackgroundColor: '#FFFEFA', exportBackground: true, exportWithDarkMode: false };
+  scene.appState = { ...scene.appState, currentItemFontFamily: HANDWRITING_FONT, viewBackgroundColor: '#FFFEFA', exportBackground: true, exportWithDarkMode: false };
   scene.cjxStyle = { version: 1, profile: 'teaching', sequence, originalElementCount: originalIds.size, phases: phased.length, cards: design.cards?.length || 0 };
   return scene;
 }

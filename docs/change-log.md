@@ -1,5 +1,11 @@
 # cjx-sketchmind 变更记录
 
+## 2026-11-18 · 在 README 展示系统架构并更新默认分支
+
+- `README.md`：新增「系统架构」一节，展示组件关系和一次绘图请求的处理流程。
+- `docs/images/cjx-sketchmind-architecture.png`：收录用本技能生成并检查过的项目架构图。
+- GitHub 默认分支和本地对应分支已改名为 `main`，本地跟踪 `origin/main`。
+
 ## 2026-11-18 · 新增 100 种场景图标
 
 - `scripts/architecture-icon-definitions.mjs`：新增覆盖人员与渠道、网络、部署、数据、消息、安全、运维、研发、AI 和业务流程的 100 个原生图标，图标总数为 120。

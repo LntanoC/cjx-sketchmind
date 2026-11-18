@@ -8,6 +8,10 @@
 
 支持业务流程图、系统流程图、功能清单图、低保真原型和静态甘特图。多角色业务流程默认使用连续平行泳道。产品图的选型、模板和检查见 [产品图指南](references/product-diagrams.md)。原型默认可编辑，甘特图的时间比例需在画布中核对。
 
+## 系统架构
+
+![cjx-sketchmind 系统架构与一次绘图请求的处理流程](docs/images/cjx-sketchmind-architecture.png)
+
 ## 工作流程
 
 ![工作流程动画：理解需求、设计图示、生成画布、检查交付](docs/images/workflow.gif)

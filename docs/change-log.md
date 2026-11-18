@@ -1,5 +1,26 @@
 # cjx-sketchmind 变更记录
 
+## 2026-11-18 · 新增 100 种场景图标
+
+- `scripts/architecture-icon-definitions.mjs`：新增覆盖人员与渠道、网络、部署、数据、消息、安全、运维、研发、AI 和业务流程的 100 个原生图标，图标总数为 120。
+- `scripts/architecture-icons.mjs`：从图标定义加载轮廓，沿用现有调用接口与坐标、尺寸和分组规则。
+- `references/architecture-icon-catalog.md` 和 `references/architecture-composition.md`：提供完整中文索引，并从构图指南链接到索引。
+
+验证：120 个图标的调用键与索引一一对应，原有 20 个图标轮廓与调用参数一致。全部图标通过 20、32、48 三种尺寸的原生图元检查，6 项现有 Node 测试通过。使用同步后的本机技能生成两张总览并检查每类图标及中文标签。
+
+## 2026-11-18 · 扩充常用架构图标
+
+- `scripts/architecture-icons.mjs`：新增网关、消息队列、缓存、云服务、认证与权限、配置、定时任务、监控、对象存储和手机图标，图标库扩至 20 种。
+- `references/architecture-composition.md`：按组件职责整理图标与调用键，便于绘图时选择。
+
+## 2026-11-18 · 补充带图标和业务场景的系统架构图规范
+
+- `SKILL.md` 和 `references/architecture-composition.md`：要求从目标系统核对主体、边界和连线，以组件图标、彩色分区和典型场景帮助读者同时理解系统组成与运行过程。风格参考用于提取画法。
+- `scripts/architecture-icons.mjs`：提供 10 种可编辑原生图标，支持按卡片分组。
+- `references/quality-checklist.md`：补充图标、连线语义、场景输入输出和假设的验收项。
+
+验证：技能校验与 6 项现有 Node 测试通过，10 种图标的原生图元、分组、尺寸和唯一 ID 检查通过。更新同步至本机 Codex 技能目录后，从当前仓库梳理并生成 `cjx-sketchmind` 架构图。原生场景 133 个图元，PNG 1403×998，已打开检查并局部调整连线。
+
 ## 2026-11-15 · 首次发布到 GitHub
 
 远端：`https://github.com/LntanoC/cjx-sketchmind.git`。分支：`codex/publish-skill`。远端检查时为空仓库；在当前项目根目录建立独立 Git 仓库，隔离桌面上原有的其他仓库及个人文件。此记录在提交和推送前写入；推送结果以远端分支与本地 HEAD 核对为准。
